@@ -12,3 +12,6 @@ var imgGovSealBang = 'assets/gov_seal_bangladesh.png',
     imgGovSealJapa = 'assets/gov_seal_japan.png',
     imgGovSealWBan = 'assets/gov_seal_west_bengal.png',
     imgGovSealKeny = 'assets/gov_seal_kenya.png';
+
+var imgClap = 'assets/clap.png';
+var imgBrain = 'assets/brain.png';

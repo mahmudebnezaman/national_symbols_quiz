@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:quiz_app/const/strings.dart';
-import 'package:quiz_app/view/widgets/answer_button.dart';
-
-import 'package:quiz_app/view/widgets/question_text.dart';
+import 'package:quiz_app/view/quiz_screen.dart';
+import 'package:quiz_app/view/result_screen.dart';
+import 'package:quiz_app/view/widgets/hint.dart';
 
 class QuizApp extends StatefulWidget {
   const QuizApp({super.key});
@@ -15,14 +15,20 @@ class QuizApp extends StatefulWidget {
 class _QuizAppState extends State<QuizApp> {
   var qIndex = 0;
   var aIndex = 0;
+  var score = 0;
 
-  void answeredQuestion() {
+  void answeredQuestion(int mark) {
+      score += mark;
     setState(() {
       qIndex++;
     });
-    if (qIndex > 2) {
+  }
+
+  void resetQuiz() {
+    setState(() {
       qIndex = 0;
-    }
+      score = 0;
+    });
   }
 
   @override
@@ -30,22 +36,41 @@ class _QuizAppState extends State<QuizApp> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(appBarTitle,
+        title: Text(appBarTitle2,
             style: const TextStyle(
                 color: Colors.red, fontWeight: FontWeight.bold, fontSize: 25)),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            QText(question: questions[qIndex]['question'].toString()),
-
-            ...(questions[qIndex]['answer'] as List<String>).map((answer){
-              return AnswerButton(answeredQuestion: answeredQuestion, img: answer);
-            }).toList(),
-          ],
+        child: qIndex < questions!.length
+            ? quizScreen(qIndex: qIndex, answeredQuestion: answeredQuestion)
+            : ResultScreen(resetQuiz: resetQuiz, mark: score),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text(
+                    '$appBarTitle:',
+                    style: const TextStyle(
+                        color: Colors.red,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25),
+                  ),
+                  content: hint()
+                );
+              });
+        },
+        elevation: 5,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(100.0),
+          ),
         ),
+        child: const Icon(Icons.lightbulb),
       ),
     );
   }
