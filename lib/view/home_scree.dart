@@ -19,7 +19,14 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: hint(),
+        child: ListView(
+          children: [
+            hint(),
+            const SizedBox(
+              height: 60,
+            )
+          ],
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton.extended(

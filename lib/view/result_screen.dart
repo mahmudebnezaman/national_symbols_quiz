@@ -50,8 +50,8 @@ class ResultScreen extends StatelessWidget {
         ),
         Text(
           markPhrase,
-          style: const TextStyle(
-            color: Color.fromARGB(255, 49, 119, 51),
+          style: TextStyle(
+            color: mark == 0 ? Colors.red : const Color.fromARGB(255, 49, 119, 51),
             fontSize: 25,
             fontWeight: FontWeight.bold
           ),
